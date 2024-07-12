@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>JQ04Ajax.jsp</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script>
+            $(function () {
+                $("#ajaxBtn").click(function () {
+                    $.ajax({
+                        url: "./common/03JsData.js",
+                        type: "get",
+                        dataType: "script",
+                        success: successFunc,
+                        error: errorFunc,
+                    });
+                });
+            });
+            /* 
+            콜백함수 정의
+            방법1. success 혹은 error 라벨뒤에 익명하수로 정의한다
+                형식] success : function(매개변수){ 실행부; }
+            방법2. jQuery 엔트리 포인트 외부에 순수 JS 함수로 정의한다
+                형식] error: 함수명
+                    JS함수는 일반적인 형식으로 정의하면된다.
+                    함수명을 명시할때는 '함수명'만 기술한다. 소괄호를 붙이지 않는다.
+                    매개변수로 전달되는 콜백데이터는 자동으로 전달된다.
+            */
+            function successFunc(responseData) {
+                MyAlert("Hello", " AJAX");
+                $("#ajaxDisplay").html(responseData);
+            }
+            function errorFunc(errorData) {
+                console.log(errorData.state, errData.statusText);
+            }
+        </script>
+    </head>
+    <body>
+        <h2>$.ajax() 메서드 사용하기</h2>
+
+        <button id="ajaxBtn">ajax()메서드 실행하기</button>
+
+        <div id="ajaxDisplay">ajax결과를 여기에 디스플레이</div>
+    </body>
+</html>
